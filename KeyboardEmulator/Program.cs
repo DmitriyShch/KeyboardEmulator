@@ -1,0 +1,36 @@
+﻿using System.Runtime.InteropServices;
+
+namespace KeyboardEmulator;
+partial class Program
+{
+    [LibraryImport("user32.dll", EntryPoint = "SendInput")]
+    [return: MarshalAs(UnmanagedType.U4)]
+    internal static partial uint SendInput(
+        uint nInputs,
+        [MarshalAs(UnmanagedType.LPArray), In] INPUT[] pInputs,
+        int cbSize);
+
+    public static void SendFastKeysVK(string text)
+    {
+        var inputs = text.ToCharArray().Select(ToInput).ToArray();
+        _ = SendInput((uint)inputs.Length, inputs, INPUT.Size);
+    }
+
+    public static INPUT ToInput(char c)
+    {
+        var input = new INPUT()
+        {
+            type = InputType.INPUT_KEYBOARD,
+        };
+        input.u.ki.wScan = (ScanCodeShort)c;
+        input.u.ki.dwFlags = KEYEVENTF.UNICODE;
+        return input;
+    }
+
+    static void Main()
+    {
+        Console.WriteLine("Переключитесь в текстовое поле. Ввод начнется через 3 секунды...");
+        Thread.Sleep(3000);
+        SendFastKeysVK("010460700836326521Be/805451266991EE1092W/DtFZr2GK4ckkg]ZtpeXtVG7/wHXjW5g7Dk8yA/7Cw=");
+    }
+}
