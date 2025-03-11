@@ -57,7 +57,7 @@
             btSend.TabIndex = 1;
             btSend.Text = "Отправить";
             btSend.UseVisualStyleBackColor = true;
-            btSend.Click += btSend_Click;
+            btSend.Click += BtSend_Click;
             // 
             // label1
             // 
@@ -70,7 +70,7 @@
             // 
             // tbTimeout
             // 
-            tbTimeout.Location = new Point(719, 138);
+            tbTimeout.Location = new Point(719, 144);
             tbTimeout.Name = "tbTimeout";
             tbTimeout.Size = new Size(100, 23);
             tbTimeout.TabIndex = 3;
@@ -79,7 +79,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(719, 120);
+            label2.Location = new Point(719, 126);
             label2.Name = "label2";
             label2.Size = new Size(173, 15);
             label2.TabIndex = 4;
@@ -105,7 +105,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(719, 65);
+            label4.Location = new Point(719, 71);
             label4.Name = "label4";
             label4.Size = new Size(148, 15);
             label4.TabIndex = 4;
@@ -113,7 +113,7 @@
             // 
             // tbInitTimeout
             // 
-            tbInitTimeout.Location = new Point(719, 83);
+            tbInitTimeout.Location = new Point(719, 89);
             tbInitTimeout.Name = "tbInitTimeout";
             tbInitTimeout.Size = new Size(100, 23);
             tbInitTimeout.TabIndex = 3;
@@ -121,6 +121,7 @@
             // 
             // MainForm
             // 
+            AcceptButton = btSend;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(924, 234);
@@ -134,7 +135,9 @@
             Controls.Add(label1);
             Controls.Add(btSend);
             Name = "MainForm";
-            Text = "MainForm";
+            Text = "KeyboardEmulator";
+            FormClosed += MainForm_FormClosed;
+            Load += MainForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }
