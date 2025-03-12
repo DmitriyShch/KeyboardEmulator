@@ -35,9 +35,11 @@
             tbTimeout = new TextBox();
             label2 = new Label();
             label3 = new Label();
-            tbSeparator = new TextBox();
+            tbPostfix = new TextBox();
             label4 = new Label();
             tbInitTimeout = new TextBox();
+            label5 = new Label();
+            tbCharTimeout = new TextBox();
             SuspendLayout();
             // 
             // tbTextForSend
@@ -45,7 +47,7 @@
             tbTextForSend.Location = new Point(12, 32);
             tbTextForSend.Multiline = true;
             tbTextForSend.Name = "tbTextForSend";
-            tbTextForSend.Size = new Size(674, 190);
+            tbTextForSend.Size = new Size(674, 252);
             tbTextForSend.TabIndex = 0;
             tbTextForSend.Text = resources.GetString("tbTextForSend.Text");
             // 
@@ -88,19 +90,19 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(719, 181);
+            label3.Location = new Point(719, 243);
             label3.Name = "label3";
-            label3.Size = new Size(75, 15);
+            label3.Size = new Size(62, 15);
             label3.TabIndex = 6;
-            label3.Text = "Разделитель";
+            label3.Text = "Постфикс";
             // 
-            // tbSeparator
+            // tbPostfix
             // 
-            tbSeparator.Location = new Point(719, 199);
-            tbSeparator.Name = "tbSeparator";
-            tbSeparator.Size = new Size(100, 23);
-            tbSeparator.TabIndex = 5;
-            tbSeparator.Text = "\\r";
+            tbPostfix.Location = new Point(719, 261);
+            tbPostfix.Name = "tbPostfix";
+            tbPostfix.Size = new Size(100, 23);
+            tbPostfix.TabIndex = 5;
+            tbPostfix.Text = "\\r";
             // 
             // label4
             // 
@@ -116,20 +118,39 @@
             tbInitTimeout.Location = new Point(719, 89);
             tbInitTimeout.Name = "tbInitTimeout";
             tbInitTimeout.Size = new Size(100, 23);
-            tbInitTimeout.TabIndex = 3;
+            tbInitTimeout.TabIndex = 2;
             tbInitTimeout.Text = "3000";
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(719, 185);
+            label5.Name = "label5";
+            label5.Size = new Size(154, 15);
+            label5.TabIndex = 4;
+            label5.Text = "Пауза между буквами (мс)";
+            // 
+            // tbCharTimeout
+            // 
+            tbCharTimeout.Location = new Point(719, 203);
+            tbCharTimeout.Name = "tbCharTimeout";
+            tbCharTimeout.Size = new Size(100, 23);
+            tbCharTimeout.TabIndex = 4;
+            tbCharTimeout.Text = "0";
             // 
             // MainForm
             // 
             AcceptButton = btSend;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(924, 234);
+            ClientSize = new Size(924, 296);
+            Controls.Add(tbCharTimeout);
             Controls.Add(tbTextForSend);
             Controls.Add(tbInitTimeout);
             Controls.Add(tbTimeout);
-            Controls.Add(tbSeparator);
+            Controls.Add(tbPostfix);
             Controls.Add(label4);
+            Controls.Add(label5);
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(label1);
@@ -150,8 +171,10 @@
         private TextBox tbTimeout;
         private Label label2;
         private Label label3;
-        private TextBox tbSeparator;
+        private TextBox tbPostfix;
         private Label label4;
         private TextBox tbInitTimeout;
+        private Label label5;
+        private TextBox tbCharTimeout;
     }
 }

@@ -20,14 +20,15 @@ namespace KeyboardEmulator
             {
                 var initTimeout = int.Parse(tbInitTimeout.Text);
                 var timeout = int.Parse(tbTimeout.Text);
-                var separator = Regex.Unescape(tbSeparator.Text);
+                var charTimeout = int.Parse(tbCharTimeout.Text);
+                var postfix = Regex.Unescape(tbPostfix.Text);
                 var textLines = tbTextForSend.Text
                     .Split('\r', StringSplitOptions.RemoveEmptyEntries)
-                    .Select(x => x.Replace("\n", "") + separator);
+                    .Select(x => x.Replace("\n", "") + postfix);
                 Thread.Sleep(initTimeout);
                 foreach (var item in textLines)
                 {
-                    KeyboardEmulator.SendFastKeys(item);
+                    KeyboardEmulator.SendFastKeys(item, charTimeout);
                     Thread.Sleep(timeout);
                 }
             }
@@ -42,9 +43,10 @@ namespace KeyboardEmulator
             var settings = new
             {
                 TextForSend = tbTextForSend.Text,
-                Separator = tbSeparator.Text,
+                Separator = tbPostfix.Text,
                 InitTimeout = tbInitTimeout.Text,
                 Timeout = tbTimeout.Text,
+                CharTimeout = tbCharTimeout.Text,
             };
             if (File.Exists(SETTINGS_FILE_NAME))
                 File.Delete(SETTINGS_FILE_NAME);
@@ -64,9 +66,10 @@ namespace KeyboardEmulator
                 if (settings == null)
                     return;
                 tbTextForSend.Text = ReadDictParam(settings, "TextForSend", tbTextForSend.Text);
-                tbSeparator.Text = ReadDictParam(settings, "Separator", tbSeparator.Text);
+                tbPostfix.Text = ReadDictParam(settings, "Separator", tbPostfix.Text);
                 tbInitTimeout.Text = ReadDictParam(settings, "InitTimeout", tbInitTimeout.Text);
                 tbTimeout.Text = ReadDictParam(settings, "Timeout", tbTimeout.Text);
+                tbCharTimeout.Text = ReadDictParam(settings, "CharTimeout", tbCharTimeout.Text);
             }
             catch { }
         }

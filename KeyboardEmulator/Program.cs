@@ -11,6 +11,21 @@ partial class KeyboardEmulator
         [MarshalAs(UnmanagedType.LPArray), In] INPUT[] pInputs,
         int cbSize);
 
+    public static void SendFastKeys(string text, int afterCharTimeout)
+    {
+        if (afterCharTimeout == 0)
+        {
+            SendFastKeys(text);
+            return;
+        }
+        foreach (var item in text.ToCharArray())
+        {
+            var input = new INPUT[] { ToInput(item) };
+            SendInput(1, input, INPUT.Size);
+            Thread.Sleep(afterCharTimeout);
+        }
+    }
+
     public static void SendFastKeys(string text)
     {
         var inputs = text.ToCharArray().Select(ToInput).ToArray();
