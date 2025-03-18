@@ -15,31 +15,57 @@ partial class KeyboardEmulator
     {
         if (afterCharTimeout == 0)
         {
-            SendFastKeys(text);
+            SendFastKeys2(text);
             return;
         }
         foreach (var item in text.ToCharArray())
         {
-            var input = new INPUT[] { ToInput(item) };
-            SendInput(1, input, INPUT.Size);
+            var input = new INPUT[] {
+                ToInput(item, KEYEVENTF.UNICODE),
+                ToInput(item, KEYEVENTF.KEYUP) };
+            SendInput((uint)input.Length, input, INPUT.Size);
             Thread.Sleep(afterCharTimeout);
         }
     }
 
     public static void SendFastKeys(string text)
     {
-        var inputs = text.ToCharArray().Select(ToInput).ToArray();
+        var chars = text.ToCharArray();
+        var inputs = new INPUT[chars.Length];
+        for (int i = 0; i < chars.Length; i++)
+        {
+            inputs[i] = ToInput(chars[i], KEYEVENTF.UNICODE);
+            //inputs[i * 2 + 1] = ToInput(chars[i], KEYEVENTF.KEYUP);
+        }
         _ = SendInput((uint)inputs.Length, inputs, INPUT.Size);
     }
 
-    private static INPUT ToInput(char c)
+    public static void SendFastKeys2(string text)
+    {
+        var chars = text.ToCharArray();
+        var inputs = new INPUT[chars.Length * 2];
+        for (int i = 0; i < chars.Length; i++)
+        {
+            inputs[i * 2] = ToInput(chars[i], KEYEVENTF.UNICODE);
+            inputs[i * 2 + 1] = ToInput(chars[i], KEYEVENTF.KEYUP);
+        }
+        _ = SendInput((uint)inputs.Length, inputs, INPUT.Size);
+    }
+
+    private static INPUT ToInput(char c, KEYEVENTF flag)
     {
         var input = new INPUT()
         {
             type = InputType.INPUT_KEYBOARD,
         };
+        //input.u.ki.wVk = (VirtualKeyShort)c;
         input.u.ki.wScan = (ScanCodeShort)c;
-        input.u.ki.dwFlags = KEYEVENTF.UNICODE;
+        //input.u.ki.time = (int)DateTime.Now.Ticks;
+        input.u.ki.dwFlags = flag;
+            //KEYEVENTF.EXTENDEDKEY |
+            //KEYEVENTF.UNICODE |
+            //KEYEVENTF.KEYUP;//
+        //| KEYEVENTF.SCANCODE;
         return input;
     }
 
